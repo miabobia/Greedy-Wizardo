@@ -12,6 +12,7 @@ import header as hd
 width, height =  720,960
 screen = pygame.display.set_mode((width, height))
 
+#saddsadas
 # a = [(["bush.png","bounce2.png","bounce3.png"],[(30,0),(5,1),(10,2),(5,1)])]
 bush_a = [hd.BUSH_IDLE, hd.BUSH_OCCUPY]
 enemy_a = [hd.ENEMY_RUN]
