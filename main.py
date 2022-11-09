@@ -5,8 +5,11 @@ import sys
 
 from bush import Bush
 from enemy import Enemy
+from projectile import Projectile
 
 import header as hd
+
+from level import Level
 
 #pygame boilerplate
 width, height =  720,960
@@ -25,8 +28,14 @@ font = pygame.font.SysFont("Arial",18)
 bushes  = []
 enemies = []
 
+projectiles = []
+
+l = None
+
+
 
 def main():
+    global l
 
     #creating bushes
     level = 0 #bushes are seperated by levels (of height) 0 at top screen n at bottom
@@ -45,7 +54,14 @@ def main():
         bushes.append(Bush(b[0], b[1], hd.BUSH_WIDTH, hd.BUSH_HEIGHT, bush_a, level,j))
         j+=1
 
-    enemies.append(Enemy(0,0,100,100,enemy_a,bushes))
+    #creating enemies
+
+    l = Level(bushes, hd.E_INFO, screen)
+
+    # enemies.append(Enemy(0,0,100,100,enemy_a,bushes))
+
+
+    projectiles.append(Projectile(100,100,50,50,bush_a))
 
     dt = 1/60
 
@@ -54,28 +70,47 @@ def main():
         draw(screen)
 
 def update(dt):
+    global l
+
+    mx,my = pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    for b in bushes:
-        b.update()
+        elif event.type == MOUSEBUTTONDOWN and projectiles:
+            projectiles[len(projectiles)-1].release()
+        
+    # for b in bushes:
+    #     b.update()
 
-    for e in enemies:
-        e.update()
+    # for e in enemies:
+    #     e.update()
+
+    l.update()
+
+
+    for p in projectiles:
+        p.update(mx,my)
 
     clock.tick(60)
 
 def draw(screen):
+    global l
     screen.fill((255, 200, 250)) #pink
     
-    for b in bushes:
-        b.show(screen,1)
-        b.show_level(screen,font)
+    # for b in bushes:
+    #     b.show(screen,1)
+    #     b.show_level(screen,font)
 
-    for e in enemies:
-        e.show(screen,1)
+    # for e in enemies:
+    #     e.show(screen,1)
 
+    l.show()
+
+    for p in projectiles:
+        p.show(screen)
+   
     screen.blit(update_fps(),(10,0))
 
     pygame.display.flip()

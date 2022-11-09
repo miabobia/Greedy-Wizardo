@@ -1,4 +1,4 @@
-
+from enemy import Enemy
 
 BUSH_IDLE   = (["bush.png","bounce2.png","bounce3.png"],[(30,0),(5,1),(10,2),(5,1)])
 BUSH_OCCUPY = (["peek.png"],[(10,0)])
@@ -22,3 +22,6 @@ bush_crds = [(82,B_SPACE-B_OFFSET), (442, B_SPACE-B_OFFSET),(262, B_SPACE*2-B_OF
 
 BUSH_WIDTH  = 120
 BUSH_HEIGHT = 80
+
+
+E_INFO = [(3,Enemy)]
