@@ -1,5 +1,6 @@
 import pygame
 from animate import Animate
+import funcs
 """
 object should have attributes:
     PARAMETERS:
@@ -12,6 +13,8 @@ object should have attributes:
 """
 
 class Base:
+
+    hb = None #hb is the center rectangle used for calculating hitboxes
 
     def __init__(self, x, y, w, h, anim_cycles):
         #sprites will be scaled to size w x hs
@@ -33,10 +36,22 @@ class Base:
         #scaling sprite image to be (w x h) dimensions
         self.spr_obj = pygame.transform.scale(self.spr_obj, (self.w,self.h))
 
-    def show(self, screen):
-        pygame.draw.rect(screen, (230, 170, 210),pygame.Rect(self.x, self.y, self.w, self.h))
+        self.update_hitbox()
+
+
+
+    def show(self, screen, debug=0):
         screen.blit(self.spr_obj, (self.x, self.y))
+        if debug:
+            self.show_hitbox(screen, pygame.Rect(self.x, self.y, self.w, self.h)) #outside hitbox
+            self.show_hitbox(screen,pygame.Rect(self.hb[0],self.hb[1],self.hb[2],self.hb[3])) #drawing self.hitbox attribute
+
     
+    def show_hitbox(self,screen,rect):
+        #takes a rect hitbox and draws rectangle border to show hitbox
+        color = (255,0,0)
+        pygame.draw.rect(screen, color, rect,  2)
+
     def update_anim(self):
         #calling this updates the animation object
         #it returns the path to sprite according to animation timings
@@ -51,6 +66,29 @@ class Base:
             self.spr_obj = pygame.transform.scale(self.spr_obj, (self.w,self.h))
 
             self.spr_str = spr_str
+
+    def update_hitbox(self):
+        #updating self.hb attrib
+        #enemy needs to update its hitbox, bushes DO NOT
+        self.hb = funcs.get_center_rect(self.x,self.y,self.w,self.h,0.5)
+
+
+    def get_pos_vec(self):
+        return (self.x,self.y)
+
+    def get_hitbox(self):
+        return self.hb
+    
+    def update_animation(self,n):
+        self.anim.set_f_names(self.anim_cycles[n][0])
+        self.anim.set_order(self.anim_cycles[n][1])
+    # #getting first image
+    # self.spr_str = self.anim_cycles[0][0][0] 
+    # self.spr_obj = pygame.image.load("sprites\\" + self.spr_str)
+
+    # #scaling sprite image to be (w x h) dimensions
+    # self.spr_obj = pygame.transform.scale(self.spr_obj, (self.w,self.h))
+
 
 
 

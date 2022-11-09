@@ -12,7 +12,6 @@ import header as hd
 width, height =  720,960
 screen = pygame.display.set_mode((width, height))
 
-#saddsadas
 # a = [(["bush.png","bounce2.png","bounce3.png"],[(30,0),(5,1),(10,2),(5,1)])]
 bush_a = [hd.BUSH_IDLE, hd.BUSH_OCCUPY]
 enemy_a = [hd.ENEMY_RUN]
@@ -61,7 +60,7 @@ def update(dt):
             sys.exit()
     for b in bushes:
         b.update()
-    
+
     for e in enemies:
         e.update()
 
@@ -71,10 +70,11 @@ def draw(screen):
     screen.fill((255, 200, 250)) #pink
     
     for b in bushes:
-        b.show(screen)
+        b.show(screen,1)
         b.show_level(screen,font)
+
     for e in enemies:
-        e.show(screen)
+        e.show(screen,1)
 
     screen.blit(update_fps(),(10,0))
 
