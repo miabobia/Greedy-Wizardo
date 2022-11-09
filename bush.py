@@ -24,3 +24,6 @@ class Bush(Base):
     
     def get_level(self):
         return self.level
+    
+    def get_pos(self):
+        return (self.x,self.y)

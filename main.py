@@ -46,7 +46,7 @@ def main():
         bushes.append(Bush(b[0], b[1], hd.BUSH_WIDTH, hd.BUSH_HEIGHT, bush_a, level,j))
         j+=1
 
-    enemies.append(Enemy(0,0,10,10,enemy_a,bushes))
+    enemies.append(Enemy(0,0,100,100,enemy_a,bushes))
 
     dt = 1/60
 
@@ -61,6 +61,9 @@ def update(dt):
             sys.exit()
     for b in bushes:
         b.update()
+    
+    for e in enemies:
+        e.update()
 
     clock.tick(60)
 
@@ -70,6 +73,8 @@ def draw(screen):
     for b in bushes:
         b.show(screen)
         b.show_level(screen,font)
+    for e in enemies:
+        e.show(screen)
 
     screen.blit(update_fps(),(10,0))
 

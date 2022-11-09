@@ -34,6 +34,7 @@ class Base:
         self.spr_obj = pygame.transform.scale(self.spr_obj, (self.w,self.h))
 
     def show(self, screen):
+        pygame.draw.rect(screen, (230, 170, 210),pygame.Rect(self.x, self.y, self.w, self.h))
         screen.blit(self.spr_obj, (self.x, self.y))
     
     def update_anim(self):

@@ -19,7 +19,7 @@ def dist(x1, y1, x2=0, y2=0):
     #gets distance between (x1,y1) -> (x2,y2)
     x = (x2 - x1)**2
     y = (y2 - y1)**2
-    return sqrt(x,y)
+    return sqrt(x+y)
 
 def get_vector(x1, y1, x2, y2):
     #gets a vector from (x1,y1) -> (x2,y2)
