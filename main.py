@@ -61,7 +61,7 @@ def main():
     # enemies.append(Enemy(0,0,100,100,enemy_a,bushes))
 
 
-    projectiles.append(Projectile(100,100,50,50,bush_a))
+    # projectiles.append(Projectile(100,100,50,50,bush_a))
 
     dt = 1/60
 
@@ -76,10 +76,13 @@ def update(dt):
 
     for event in pygame.event.get():
         if event.type == QUIT:
-            pygame.quit()
+            pygame.quit() 
             sys.exit()
         elif event.type == MOUSEBUTTONDOWN and projectiles:
             projectiles[len(projectiles)-1].release()
+            l.spawn_projectile()
+
+            pass
         
     # for b in bushes:
     #     b.update()
@@ -90,8 +93,8 @@ def update(dt):
     l.update()
 
 
-    for p in projectiles:
-        p.update(mx,my)
+    # for p in projectiles:
+    #     p.update(mx,my)
 
     clock.tick(60)
 
