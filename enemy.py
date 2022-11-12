@@ -15,7 +15,7 @@ class Enemy(Base):
     spd = 1
 
     hide_counter = 0
-    hide_lim     = 100
+    hide_lim     = 100000000
 
     
     def __init__(self, x, y, w, h, anim_cycles,bushes):

@@ -1,6 +1,7 @@
 from random import randint
 from enemy import Enemy
 import header as hd
+from projectile import Projectile
 
 """
 PARAMETERS:
@@ -14,6 +15,8 @@ class Level:
 
     enemies = []
     e_timer = 0
+
+    projectiles = []
 
     def __init__(self, bushes, e_info,screen):
         print("level created")
@@ -33,10 +36,18 @@ class Level:
         for b in self.bushes:
             b.update()
 
-        if self.enemies:
-            for e in self.enemies:
-                e.update()
+
+        for e in self.enemies:
+            e.update()
+
+        mx,my = pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]
+        for p in self.projectiles:
+            p.update(mx,my)
+
+
     
+        
+
         #level complete condition
         if not self.e_info and not self.enemies:
             print("LEVEL IS FINISHED")
@@ -45,10 +56,11 @@ class Level:
         for b in self.bushes:
             b.show(self.screen)
 
-        if self.enemies:
-            for e in self.enemies:
-                e.show(self.screen)
+        for e in self.enemies:
+            e.show(self.screen)
     
+        for p in self.projectiles:
+            p.show()
 
     def spawn_enemy(self):
         e_type = self.get_enemy()
@@ -67,3 +79,6 @@ class Level:
             self.e_info[choice] = (e_count, return_type)
         return return_type
 
+    def spawn_projectile(self):
+        self.projectiles.append(1,1,hd.bush_a)
+        pass

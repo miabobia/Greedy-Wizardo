@@ -7,9 +7,10 @@ class Projectile(Base):
     target = (None,None)
     #z-axis value. as z approaches 0 that means it is getting closer to the ground
     z = 100
+    hitting = False #if projectile has reached teh ground
 
-    def __init__(self, x, y, w, h, anim_cycles):
-        super().__init__(x, y, w, h, anim_cycles)
+    def __init__(self, w, h, anim_cycles):
+        super().__init__(1, 1, w, h, anim_cycles)
 
     def update(self, mx, my):
         if self.released:
@@ -17,6 +18,7 @@ class Projectile(Base):
             if self.z <= 0:
                 self.released = False
                 self.z = 100
+                self.hitting = True
         else:
             self.x,self.y = mx,my
 
