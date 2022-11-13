@@ -25,3 +25,6 @@ BUSH_HEIGHT = 80
 
 
 E_INFO = [(3,Enemy)]
+
+WIDTH = 720
+HEIGHT = 960

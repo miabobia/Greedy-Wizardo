@@ -2,6 +2,8 @@ from random import randint
 from enemy import Enemy
 import header as hd
 from projectile import Projectile
+import pygame
+import funcs
 
 """
 PARAMETERS:
@@ -16,7 +18,6 @@ class Level:
     enemies = []
     e_timer = 0
 
-    projectiles = []
 
     def __init__(self, bushes, e_info,screen):
         print("level created")
@@ -24,6 +25,7 @@ class Level:
         self.bushes = bushes
         self.e_info = e_info
         self.screen = screen
+        self.projectile = self.spawn_projectile()
 
     def update(self):
 
@@ -41,12 +43,20 @@ class Level:
             e.update()
 
         mx,my = pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]
-        for p in self.projectiles:
-            p.update(mx,my)
+        self.projectile.update(mx,my)
+        if self.projectile.hitting:
+            #check if colliding with enemies
 
+            for e in self.enemies:
+                if e.get_hiding():
+                    continue
+                r1 = [self.projectile.x, self.projectile.y, self.projectile.w, self.projectile.h]
+                r2 = [e.hb[0], e.hb[1], e.hb[2], e.hb[3]]
 
-    
-        
+                if funcs.rect_collide(r1[0],r1[1],r1[2],r1[3], r2[0],r2[1],r2[2],r2[3]):
+                    self.remove_enemy(e)
+
+            self.projectile.reset()
 
         #level complete condition
         if not self.e_info and not self.enemies:
@@ -57,11 +67,9 @@ class Level:
             b.show(self.screen)
 
         for e in self.enemies:
-            e.show(self.screen)
+            e.show(self.screen,debug=1)
     
-        for p in self.projectiles:
-            p.show()
-
+        self.projectile.show(self.screen,d=1)
     def spawn_enemy(self):
         e_type = self.get_enemy()
         if e_type:
@@ -80,5 +88,10 @@ class Level:
         return return_type
 
     def spawn_projectile(self):
-        self.projectiles.append(1,1,hd.bush_a)
-        pass
+        return Projectile(10,10,1,[hd.BUSH_IDLE])
+
+    def release_projectile(self):
+        self.projectile.release()
+
+    def remove_enemy(self, e):
+        self.enemies.remove(e)

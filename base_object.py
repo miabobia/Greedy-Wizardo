@@ -43,11 +43,13 @@ class Base:
     def show(self, screen, debug=0):
         screen.blit(self.spr_obj, (self.x, self.y))
         if debug:
-            self.show_hitbox(screen, pygame.Rect(self.x, self.y, self.w, self.h)) #outside hitbox
-            self.show_hitbox(screen,pygame.Rect(self.hb[0],self.hb[1],self.hb[2],self.hb[3])) #drawing self.hitbox attribute
+            self.show_rect(screen, pygame.Rect(self.x, self.y, self.w, self.h)) #outside hitbox
+            self.show_inside_hitbox(screen)
 
-    
-    def show_hitbox(self,screen,rect):
+    def show_inside_hitbox(self,screen):
+        self.show_rect(screen,pygame.Rect(self.hb[0],self.hb[1],self.hb[2],self.hb[3])) #drawing self.hitbox attribute
+
+    def show_rect(self,screen,rect):
         #takes a rect hitbox and draws rectangle border to show hitbox
         color = (255,0,0)
         pygame.draw.rect(screen, color, rect,  2)

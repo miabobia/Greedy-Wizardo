@@ -1,5 +1,6 @@
 from base_object import Base
 import pygame
+import header 
 
 class Projectile(Base):
 
@@ -9,15 +10,15 @@ class Projectile(Base):
     z = 100
     hitting = False #if projectile has reached teh ground
 
-    def __init__(self, w, h, anim_cycles):
+    def __init__(self, w, h, speed, anim_cycles):
         super().__init__(1, 1, w, h, anim_cycles)
+        self.speed = speed
 
     def update(self, mx, my):
+        self.update_hitbox()
         if self.released:
-            self.z -= 1
+            self.z -= self.speed
             if self.z <= 0:
-                self.released = False
-                self.z = 100
                 self.hitting = True
         else:
             self.x,self.y = mx,my
@@ -30,11 +31,25 @@ class Projectile(Base):
             color = (219,100,20)
             #drawing crosshair
             pygame.draw.circle(screen, color, (self.x, self.y),self.z,1)
+
+            color = (116,109,101)
+            pygame.draw.circle(screen, color, (header.WIDTH - header.WIDTH/3, header.HEIGHT - header.HEIGHT/4),self.z)
     
+        if d:
+            self.show_inside_hitbox(screen)
+
+        print("X: ",self.x)
+        print("Y: ",self.y)
+        print()
 
 
     def release(self):
         self.released = True
+
+    def reset(self):
+        self.z = 100
+        self.released = False
+        self.hitting = False
 
 
 

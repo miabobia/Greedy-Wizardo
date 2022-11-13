@@ -12,7 +12,7 @@ import header as hd
 from level import Level
 
 #pygame boilerplate
-width, height =  720,960
+width, height =  hd.WIDTH, hd.HEIGHT
 screen = pygame.display.set_mode((width, height))
 
 # a = [(["bush.png","bounce2.png","bounce3.png"],[(30,0),(5,1),(10,2),(5,1)])]
@@ -78,11 +78,8 @@ def update(dt):
         if event.type == QUIT:
             pygame.quit() 
             sys.exit()
-        elif event.type == MOUSEBUTTONDOWN and projectiles:
-            projectiles[len(projectiles)-1].release()
-            l.spawn_projectile()
-
-            pass
+        elif event.type == MOUSEBUTTONDOWN:
+            l.release_projectile()
         
     # for b in bushes:
     #     b.update()

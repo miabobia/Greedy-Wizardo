@@ -15,7 +15,7 @@ class Enemy(Base):
     spd = 1
 
     hide_counter = 0
-    hide_lim     = 100000000
+    hide_lim     = 100
 
     
     def __init__(self, x, y, w, h, anim_cycles,bushes):
@@ -101,5 +101,8 @@ class Enemy(Base):
         if not self.hiding:
             screen.blit(self.spr_obj, (self.x, self.y))
         if debug:
-            self.show_hitbox(screen, pygame.Rect(self.x, self.y, self.w, self.h)) #outside hitbox
-            self.show_hitbox(screen,pygame.Rect(self.hb[0],self.hb[1],self.hb[2],self.hb[3])) #drawing self.hitbox attribute
+            self.show_rect(screen, pygame.Rect(self.x, self.y, self.w, self.h)) #outside hitbox
+            self.show_rect(screen,pygame.Rect(self.hb[0],self.hb[1],self.hb[2],self.hb[3])) #drawing self.hitbox attribute
+
+    def get_hiding(self):
+        return self.hiding
